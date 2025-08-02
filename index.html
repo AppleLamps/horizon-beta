@@ -53,13 +53,16 @@
     <aside class="toolbar" id="toolbar" aria-label="Image editing toolbar" role="region">
       <div class="group" role="group" aria-labelledby="grp-load-label">
         <h3 id="grp-load-label" class="sr-only">Load</h3>
-        <label class="file-label" title="Load an image from your device">
-          <input id="fileInput" type="file" accept="image/*" />
-          <span>
-            <svg class="icon" aria-hidden="true"><use href="#icon-file"></use></svg>
-            <span>Load Image</span>
-          </span>
-        </label>
+        <div class="file-row">
+          <label class="file-label" title="Load an image from your device">
+            <input id="fileInput" type="file" accept="image/*" />
+            <span>
+              <svg class="icon" aria-hidden="true"><use href="#icon-file"></use></svg>
+              <span>Load Image</span>
+            </span>
+          </label>
+          <button id="removeImageBtn" class="danger-btn" title="Remove current image" disabled>Remove Image</button>
+        </div>
       </div>
 
       <div class="group" role="group" aria-labelledby="grp-tools-label">

@@ -16,6 +16,7 @@ const ctx = canvas.getContext("2d");
 
 // DOM refs
 const fileInput = document.getElementById("fileInput");
+const removeImageBtn = document.getElementById("removeImageBtn");
 const cropBtn = document.getElementById("cropBtn");
 const rotateBtn = document.getElementById("rotateBtn");
 const flipHBtn = document.getElementById("flipHBtn");
@@ -261,6 +262,7 @@ function main(){
     onHistoryChange();
     ui.announce(`Image loaded ${canvas.width} by ${canvas.height} pixels`);
     cropBtn && cropBtn.focus();
+    if (removeImageBtn) removeImageBtn.disabled = false;
   };
 
   // Loader (file input)
@@ -574,6 +576,53 @@ function main(){
       layerList.appendChild(li);
     });
   }
+
+  // Remove Image handler
+  function removeImage() {
+    // Clear base canvas
+    setCanvasSizeWithUI(0, 0);
+    ctx.clearRect(0, 0, canvas.width || 0, canvas.height || 0);
+    // Clear edit layers
+    if (textLayer) {
+      const tctx = textLayer.getContext("2d");
+      tctx && tctx.clearRect(0,0,textLayer.width,textLayer.height);
+    }
+    if (drawLayer) {
+      const dctx = drawLayer.getContext("2d");
+      dctx && dctx.clearRect(0,0,drawLayer.width,drawLayer.height);
+    }
+    // Close tools/overlays
+    document.body.classList.remove("crop-active","is-cropping");
+    cropBtn && cropBtn.classList.remove("active","is-active");
+    if (textControls) textControls.style.display = "none";
+    textBtn && textBtn.classList.remove("is-active");
+    textBtn && textBtn.setAttribute("aria-pressed","false");
+    textApi && textApi.setInteractive && textApi.setInteractive(false);
+    if (brushControls) brushControls.style.display = "none";
+    drawBtn && drawBtn.classList.remove("is-active");
+    drawBtn && drawBtn.setAttribute("aria-pressed","false");
+    brushApi && brushApi.setActive && brushApi.setActive(false);
+    // Reset sliders
+    if (brightness) brightness.value = "0";
+    if (contrast) contrast.value = "0";
+    if (saturation) saturation.value = "0";
+    if (vibrance) vibrance.value = "0";
+    // Reset history
+    try {
+      // push a clean state by reinitializing history to empty canvas dimensions
+      onHistoryChange({ thumbnails: [], thumbPrefs: null });
+    } catch {}
+    // Disable image-dependent controls
+    undoBtn && (undoBtn.disabled = true);
+    redoBtn && (redoBtn.disabled = true);
+    saveBtn && (saveBtn.disabled = true);
+    if (removeImageBtn) removeImageBtn.disabled = true;
+    hint.textContent = "Drop or load an image to begin. No uploads, all in-browser.";
+    // Announce
+    ui.announce("Image removed. Editor reset to empty state.");
+    ui.showToast("Image removed", "Canvas cleared");
+  }
+  removeImageBtn && removeImageBtn.addEventListener("click", removeImage);
 
   // Initial UI
   onHistoryChange();

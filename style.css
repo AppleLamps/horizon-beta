@@ -130,6 +130,7 @@ body{
   flex-wrap:wrap;
   margin: 0;
   align-items: center;
+  justify-content: flex-start;
   background: var(--panel-2);
   border:1px solid var(--border);
   border-radius: var(--radius-md);
@@ -145,6 +146,13 @@ body{
 }
 .toolbar .group:last-child{ margin-bottom:0; }
 
+.file-row{
+  display:flex;
+  gap: var(--space-8);
+  width:100%;
+  align-items:stretch;
+  flex-wrap:wrap;
+}
 .file-label{
   cursor:pointer;
   display:flex; align-items:center; gap: var(--space-8);
@@ -164,7 +172,7 @@ body{
 }
 .file-label input{ display:none; }
 
-.tool-btn, .primary-btn, .select{
+.tool-btn, .primary-btn, .danger-btn, .select{
   appearance:none;
   border:1px solid var(--border);
   background:var(--panel-2);
@@ -199,11 +207,26 @@ body{
 }
 .tool-btn:disabled{
   opacity:.5; cursor:not-allowed; border-color:#223;
+  filter:saturate(.7);
 }
 .primary-btn{
   background:linear-gradient(180deg, #2b5abf, #214891);
   border-color:#2a4d96;
   color:#fff;
+}
+.danger-btn{
+  background: linear-gradient(180deg, #8a2b2b, #6b2020);
+  border-color:#7a2929;
+  color:#fff;
+}
+.danger-btn:hover{
+  filter: brightness(1.05);
+  box-shadow:0 0 0 2px rgba(255,107,107,.15) inset;
+}
+.danger-btn:focus-visible{
+  outline:2px solid var(--danger);
+  outline-offset:2px;
+  box-shadow:0 0 0 3px rgba(255,107,107,.25);
 }
 .primary-btn:hover{
   filter:brightness(1.05);
@@ -242,7 +265,9 @@ body{
 .history-strip-controls{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap: var(--space-8);
+  width: 100%;
 }
 .history-strip-controls select{
   appearance:none;
@@ -285,7 +310,7 @@ body{
 }
 #resetAdjustBtn.tool-btn{
   margin-top: 6px;
-  align-self: start;
+  align-self: center;
 }
 
 /* Canvas area */
@@ -453,6 +478,37 @@ body{
   fill:none;
   vertical-align:-2px;
   shape-rendering: geometricPrecision;
+}
+
+/* Center specific groups */
+.group[data-center],
+.toolbar .group.centered {
+  justify-content: center;
+}
+
+/* Load/Remove row: keep buttons aligned and equal height */
+.toolbar .group[aria-labelledby="grp-load-label"]{
+  gap: var(--space-8);
+}
+.toolbar .group[aria-labelledby="grp-load-label"] .file-label,
+.toolbar .group[aria-labelledby="grp-load-label"] #removeImageBtn{
+  flex: 1 1 140px;
+}
+.toolbar .group[aria-labelledby="grp-load-label"] .file-label span,
+.toolbar .group[aria-labelledby="grp-load-label"] #removeImageBtn{
+  min-height: 36px;
+  display:inline-flex; align-items:center; justify-content:center;
+}
+
+/* Make primary export buttons row centered and full-width */
+.toolbar .group[aria-labelledby="grp-export-label"]{
+  justify-content:center;
+}
+.toolbar .group[aria-labelledby="grp-history-label"]{
+  justify-content:center;
+}
+.toolbar .group[aria-labelledby="grp-tools-label"]{
+  justify-content:center;
 }
 
 /* Accordion (Phase 2 mobile toolbar) */
