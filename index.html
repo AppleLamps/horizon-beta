@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vanilla JS Image Editor</title>
+  <title>Horizon Beta Image Editor</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
 </head>
@@ -46,7 +46,7 @@
   </svg>
 
   <header class="app-header">
-    <h1>Vanilla Image Editor</h1>
+    <h1>Horizon Beta Image Editor</h1>
   </header>
 
   <main class="app-grid">
@@ -113,11 +113,13 @@
         </button>
         <div class="history-strip-controls">
           <label for="histSize" class="sr-only">Thumbnail size</label>
-          <select id="histSize" title="Thumbnail size">
-            <option value="64">Small</option>
-            <option value="96" selected>Medium</option>
-            <option value="128">Large</option>
-          </select>
+          <div class="select" role="button" aria-label="Thumbnail size selector">
+            <select id="histSize" title="Thumbnail size">
+              <option value="64">Small</option>
+              <option value="96" selected>Medium</option>
+              <option value="128">Large</option>
+            </select>
+          </div>
         </div>
       </div>
 

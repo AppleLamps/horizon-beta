@@ -120,12 +120,28 @@ body{
   max-height: calc(100vh - 100px);
   overflow:auto;
   box-shadow: var(--shadow);
+  display:flex;
+  flex-direction:column;
+  gap: var(--space-12);
 }
 .toolbar .group{
   display:flex;
   gap: var(--space-8);
   flex-wrap:wrap;
-  margin-bottom: var(--space-12);
+  margin: 0;
+  align-items: center;
+  background: var(--panel-2);
+  border:1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+}
+.toolbar .group .section-title{
+  width:100%;
+  margin: 2px 0 6px;
+  font-size: var(--fs-sm);
+  letter-spacing:.2px;
+  color: var(--muted-2);
+  text-transform: uppercase;
 }
 .toolbar .group:last-child{ margin-bottom:0; }
 
@@ -148,7 +164,7 @@ body{
 }
 .file-label input{ display:none; }
 
-.tool-btn, .primary-btn{
+.tool-btn, .primary-btn, .select{
   appearance:none;
   border:1px solid var(--border);
   background:var(--panel-2);
@@ -197,6 +213,59 @@ body{
   outline:2px solid var(--accent);
   outline-offset:2px;
   box-shadow:0 0 0 3px var(--ring-color);
+}
+
+/* Styled select to match buttons (for history size dropdown) */
+.select{
+  border:1px solid var(--border);
+  background:var(--panel-2);
+  color:var(--text);
+  padding:8px 10px;
+  border-radius: var(--radius-md);
+  min-height:32px;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
+  cursor:pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-fast) var(--ease-standard),
+    transform var(--dur-xfast) var(--ease-exit);
+}
+.select:hover{ border-color:var(--accent); color:#fff; box-shadow:0 0 0 2px rgba(78,163,255,.15) inset; }
+.select:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  box-shadow:0 0 0 3px var(--ring-color);
+}
+.history-strip-controls{
+  display:flex;
+  align-items:center;
+  gap: var(--space-8);
+}
+.history-strip-controls select{
+  appearance:none;
+  background:none;
+  border:none;
+  color:inherit;
+  font: inherit;
+  padding:0;
+}
+.history-strip-controls .select{
+  position: relative;
+  padding-right: 28px; /* space for arrow */
+}
+.history-strip-controls .select::after{
+  content:"";
+  position:absolute;
+  right:10px; top:50%;
+  width:8px; height:8px;
+  border-right:2px solid currentColor;
+  border-bottom:2px solid currentColor;
+  transform: translateY(-60%) rotate(45deg);
+  opacity:.8;
+  pointer-events:none;
 }
 
 .sliders{
